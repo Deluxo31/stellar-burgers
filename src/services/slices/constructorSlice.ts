@@ -28,9 +28,6 @@ export const constructorSlice = createSlice({
 
       // Проверяем обязательные поля
       if (!ingredient.id) {
-        console.error('❌ Ингредиент не содержит id:', ingredient);
-        // Не делаем return в Redux Toolkit с Immer!
-        // Вместо этого просто не добавляем
         return;
       }
       state.ingredients.push(action.payload);
