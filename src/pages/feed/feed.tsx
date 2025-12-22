@@ -16,7 +16,7 @@ export const Feed: FC = () => {
   const isLoading = useSelector(getFeedIsLoading);
 
   useEffect(() => {
-    console.log('Загружаем ленту заказов');
+    //console.log('✅✅✅✅Загружаем ленту заказов✅✅✅✅');
     dispatch(fetchFeed());
   }, [dispatch]);
   const handleGetFeeds = () => {

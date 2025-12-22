@@ -25,22 +25,22 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
     const dispatch = useDispatch();
 
     const handleAdd = () => {
-      console.log('🎯 Добавляем ингредиент:', ingredient);
-      console.log('Имеет ли _id?', ingredient._id);
+      //console.log('✅✅✅✅ Добавляем ингредиент:✅✅✅✅', ingredient);
       if (!ingredient || !ingredient._id) {
-        console.error('Ингредиент не содержит _id:', ingredient);
+        console.error(
+          '✅✅✅✅Ингредиент не содержит _id:✅✅✅✅',
+          ingredient
+        );
       }
-
-      // ✅ ИСПРАВЛЕНО: корректное преобразование
       const constructorIngredient =
         transformToConstructorIngredient(ingredient);
 
       if (ingredient.type === 'bun') {
         dispatch(setBun(constructorIngredient));
-        console.log('🍞 Установлена булка:', constructorIngredient);
+        //console.log('✅✅✅✅ Установлена булка:✅✅✅✅', constructorIngredient);
       } else {
         dispatch(addIngredient(constructorIngredient));
-        console.log('🥬 Добавлена начинка:', constructorIngredient);
+        //console.log('✅✅✅✅ Добавлена начинка:✅✅✅✅', constructorIngredient);
       }
     };
 

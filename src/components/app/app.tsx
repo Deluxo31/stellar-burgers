@@ -32,9 +32,9 @@ const App = () => {
   const isInitialized = useRef(false);
 
   useEffect(() => {
-    //console.log(' useEffect сработал');
+    //console.log('✅✅✅✅ useEffect сработал✅✅✅✅');
     if (!isInitialized.current) {
-      //console.log(' Инициализация приложения');
+      //console.log('✅✅✅ Инициализация приложения✅✅✅');
       dispatch(fetchIngredients());
       dispatch(checkUserAuth());
       isInitialized.current = true;
