@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { orderBurgerApi, getOrderByNumberApi } from '@api';
 import { TOrder } from '@utils-types';
 import { RootState } from '../store';
+import { clearConstructor } from './constructorSlice';
 
 type TOrderState = {
   currentOrder: TOrder | null;
@@ -19,8 +20,9 @@ const initialState: TOrderState = {
 
 export const createOrder = createAsyncThunk(
   'order/createOrder',
-  async (ingredients: string[]) => {
+  async (ingredients: string[], { dispatch }) => {
     const response = await orderBurgerApi(ingredients);
+    dispatch(clearConstructor());
     return response.order;
   }
 );

@@ -21,8 +21,12 @@ export const fetchUserOrders = createAsyncThunk(
     try {
       const orders = await getOrdersApi();
       return orders;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Ошибка загрузки');
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'Неизвестная ошибка при загрузке заказов';
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -42,8 +46,10 @@ export const userOrdersSlice = createSlice({
         state.orders = action.payload;
       })
       .addCase(fetchUserOrders.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message || 'Ошибка загрузки заказов';
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : action.error.message || 'Ошибка загрузки заказов';
       });
   }
 });

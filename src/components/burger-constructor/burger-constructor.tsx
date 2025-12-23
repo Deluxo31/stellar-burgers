@@ -45,14 +45,12 @@ export const BurgerConstructor: FC = () => {
 
   const closeOrderModal = () => {
     dispatch(clearOrder());
-    dispatch(clearConstructor());
   };
 
   const price = useMemo(
     () =>
       (constructorItems.bun ? constructorItems.bun.price * 2 : 0) +
       (constructorItems.ingredients || []).reduce(
-        /// было   constructorItems.ingredients.reduce(
         (s: number, v: TConstructorIngredient) => s + v.price,
         0
       ),

@@ -119,7 +119,10 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'Ошибка регистрации';
       })
 
       // loginUser
@@ -135,7 +138,10 @@ const userSlice = createSlice({
       })
       .addCase(UserLogin.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'Ошибка авторизации';
       })
 
       // getUser
@@ -150,7 +156,10 @@ const userSlice = createSlice({
       })
       .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'Ошибка авторизации';
         state.isAuthChecked = true;
       })
 
@@ -166,7 +175,10 @@ const userSlice = createSlice({
       })
       .addCase(userUpdate.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'Ошибка получения данных пользователя ';
       })
 
       // logout
@@ -181,7 +193,8 @@ const userSlice = createSlice({
       })
       .addCase(userLogout.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error =
+          typeof action.payload === 'string' ? action.payload : 'Ошибка выхода';
       });
   }
 });
