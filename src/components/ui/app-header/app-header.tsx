@@ -15,6 +15,7 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
       <div className={styles.menu_part_left}>
         <NavLink
           to='/'
+          data-cy='logo'
           className={({ isActive }) =>
             `${styles.link} ${isActive ? styles.link_active : ''}`
           }

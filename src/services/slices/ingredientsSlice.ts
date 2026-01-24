@@ -27,7 +27,9 @@ export const fetchIngredients = createAsyncThunk(
     } catch (error) {
       console.error('❌ Ошибка при загрузке ингредиентов:', error);
       return rejectWithValue(
-        error instanceof Error ? error.message : 'Неизвестная ошибка'
+        error instanceof Error
+          ? 'Ошибка загрузки ингредиентов'
+          : 'Неизвестная ошибка'
       );
     }
   }
