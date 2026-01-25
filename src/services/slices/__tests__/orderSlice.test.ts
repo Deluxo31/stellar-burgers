@@ -27,12 +27,13 @@ const mockOrder: TOrder = {
 };
 
 describe('orderSlice', () => {
-  const initialState = {
+ /* const initialState = {
     currentOrder: null,
     orderByNumber: null,
     isLoading: false,
     error: null
-  };
+  };*/
+  const initialState = orderSlice.getInitialState();
 
   beforeEach(() => {
     jest.clearAllMocks();

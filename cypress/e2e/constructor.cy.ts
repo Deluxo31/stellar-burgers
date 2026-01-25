@@ -1,3 +1,5 @@
+import { SELECTORS } from '../../src/constants/test-selectors';
+
 describe('Конструктор бургера', () => {
   // Константы для тестов
   const BUN_NAME = 'Краторная булка N-200i';
@@ -63,16 +65,16 @@ describe('Конструктор бургера', () => {
     it('Должен возвращаться на главную страницу после закрытия модалки', () => {
       // Открываем модалку
       cy.contains(BUN_NAME).click();
-      cy.get('[data-cy="modal"]').should('be.visible');
+      cy.get(SELECTORS.MODAL).should('be.visible');
 
       // Закрываем модалку через крестик
-      cy.get('[data-cy="modal-close"]').click();
+      cy.get(SELECTORS.MODAL_CLOSE).click();
 
       //  ждём исчезновения оверлея
-      cy.get('[data-cy="modal"]').should('not.exist', { timeout: 5000 });
+      cy.get(SELECTORS.MODAL).should('not.exist', { timeout: 5000 });
 
       // Теперь кликаем по логотипу
-      cy.get('[data-cy="logo"]').click();
+      cy.get(SELECTORS.LOGO).click();
       cy.url().should('eq', 'http://localhost:4000/');
     });
   });
@@ -91,10 +93,10 @@ describe('Конструктор бургера', () => {
         .click({ force: true });
 
       // Проверка результата
-      cy.get('[data-cy="constructor-bun-top"]').should('contain', BUN_NAME);
+      cy.get(SELECTORS.CONSTRUCTOR_BUN_TOP).should('contain', BUN_NAME);
 
       // Проверяем наличие начинки в контейнере
-      cy.get('[data-cy="constructor-ingredients"]').should(
+      cy.get(SELECTORS.CONSTRUCTOR_INGREDIENTS).should(
         'contain',
         MAIN_INGREDIENT_NAME
       );
@@ -125,11 +127,11 @@ describe('Конструктор бургера', () => {
         body: { message: 'Пользователь не авторизован' }
       }).as('createOrderError');
 
-      cy.get('[data-cy="order-button"]').click();
+      cy.get(SELECTORS.ORDER_BUTTON).click();
       cy.wait('@createOrderError');
 
       // Проверяем, что конструктор остался нетронутым
-      cy.get('[data-cy="constructor-bun-top"]').should('contain', BUN_NAME);
+      cy.get(SELECTORS.CONSTRUCTOR_BUN_TOP).should('contain', BUN_NAME);
 
       // Проверяем наличие системного уведомления
       cy.get('body').then(($body) => {
@@ -148,38 +150,35 @@ describe('Конструктор бургера', () => {
     });
 
     it('Должен создавать заказ для авторизованного пользователя', () => {
-      cy.get('[data-cy="order-button"]').click();
+      cy.get(SELECTORS.ORDER_BUTTON).click();
       cy.wait('@createOrder');
 
       // Проверяем открытие модалки
-      cy.get('[data-cy="modal"]').should('be.visible');
+      cy.get(SELECTORS.MODAL).should('be.visible');
 
       // Проверяем содержимое модалки
-      cy.get('[data-cy="modal-content"]')
+      cy.get(SELECTORS.MODAL_CONTENT)
         .contains('идентификатор заказа')
         .should('be.visible');
-      cy.get('[data-cy="modal-content"]')
+      cy.get(SELECTORS.MODAL_CONTENT)
         .contains(ORDER_NUMBER)
         .should('be.visible');
     });
 
     it('Должен очищать конструктор после создания заказа', () => {
-      cy.get('[data-cy="order-button"]').click();
+      cy.get(SELECTORS.ORDER_BUTTON).click();
       cy.wait('@createOrder');
 
       // Закрываем модальное окно
-      cy.get('[data-cy="modal-close"]').click();
+      cy.get(SELECTORS.MODAL_CLOSE).click();
 
       // Проверяем очистку конструктора
-      cy.get('[data-cy="constructor-bun-top"]').should(
+      cy.get(SELECTORS.CONSTRUCTOR_BUN_TOP).should('contain', 'Выберите булки');
+      cy.get(SELECTORS.CONSTRUCTOR_BUN_BOTTOM).should(
         'contain',
         'Выберите булки'
       );
-      cy.get('[data-cy="constructor-bun-bottom"]').should(
-        'contain',
-        'Выберите булки'
-      );
-      cy.get('[data-cy="constructor-ingredients"]').should(
+      cy.get(SELECTORS.CONSTRUCTOR_INGREDIENTS).should(
         'contain',
         'Выберите начинку'
       );

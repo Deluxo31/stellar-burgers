@@ -15,13 +15,14 @@ const mockFeed = {
 };
 
 describe('feedSlice', () => {
-  const initialState = {
+  /*const initialState = {
     orders: [],
     total: 0,
     totalToday: 0,
     isLoading: false,
     error: null
-  };
+  };*/
+  const initialState = feedSlice.getInitialState();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -30,16 +31,16 @@ describe('feedSlice', () => {
   describe('асинхронные экшены', () => {
     it('должен успешно загружать ленту заказов', async () => {
       (getFeedsApi as jest.Mock).mockResolvedValue(mockFeed);
-      
+
       const store = configureStore({
         reducer: { feed: feedReducer },
         preloadedState: { feed: initialState }
       });
-      
+
       await store.dispatch(fetchFeed());
-      
+
       const state = store.getState().feed;
-      
+
       expect(state.isLoading).toBe(false);
       expect(state.orders).toEqual([]);
       expect(state.total).toBe(1000);
@@ -49,16 +50,16 @@ describe('feedSlice', () => {
 
     it('должен обрабатывать ошибку при загрузке ленты', async () => {
       (getFeedsApi as jest.Mock).mockRejectedValue(new Error('Ошибка ленты'));
-      
+
       const store = configureStore({
         reducer: { feed: feedReducer },
         preloadedState: { feed: initialState }
       });
-      
+
       await store.dispatch(fetchFeed());
-      
+
       const state = store.getState().feed;
-      
+
       expect(state.isLoading).toBe(false);
       expect(state.error).toBe('Ошибка ленты');
     });
